@@ -168,4 +168,36 @@ export const getAirlineByUsername = async (userName) => {
       console.error('Error fetching flights data:', error);
     }
   };
+
+  export const fetchUserFlights = async (userId) => {
+    return [
+      {
+        id: '1',
+        airlineCompanyId: '101',
+        originCountryId: '201',
+        destinationCountryId: '301',
+        departureTime: '2023-07-30T10:00:00Z',
+        landingTime: '2023-07-30T15:30:00Z',
+        remainingTickets: 50,
+      },
+      {
+        id: '2',
+        airlineCompanyId: '102',
+        originCountryId: '202',
+        destinationCountryId: '302',
+        departureTime: '2023-08-05T08:45:00Z',
+        landingTime: '2023-08-05T12:15:00Z',
+        remainingTickets: 25,
+      }
+      // Add more flights as needed
+    ];
+    
+    try {
+      // Replace 'https://api.example.com/flights' with the actual URL of your API endpoint for flights
+      const response = await axios.get('https://api.example.com/flights/' + userId);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching flights data:', error);
+    }
+  };
   

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchFlights } from '../../api/common';
+import { fetchFlights, fetchUserFlights } from '../../api/common';
+import FlightsTable from './FlightsTable'; 
 
-const FlightsList = () => {
+const FlightsList = ({userFlights}) => {
   const [flights, setFlights] = useState([]);
   const [filteredFlights, setFilteredFlights] = useState([]);
   const [originCountryFilter, setOriginCountryFilter] = useState('');
@@ -11,10 +12,18 @@ const FlightsList = () => {
 
   useEffect(() => {
     // Function to fetch flights data from the server using the fetchFlights function from your API
-    fetchFlights().then((flightsData) => {
-      setFlights(flightsData);
-    });
-  }, []);
+    if (userFlights){
+        const userId = localStorage.setItem('userId', null);
+        fetchUserFlights(userId).then((flightsData) => {
+            setFlights(flightsData);
+          });
+    }
+    else{
+        fetchFlights().then((flightsData) => {
+            setFlights(flightsData);
+          });
+    }
+  }, [userFlights]);
 
   useEffect(() => {
     // Function to apply filters and update the filtered flights
@@ -47,7 +56,7 @@ const FlightsList = () => {
 
   return (
     <div>
-      <h2>Flights List</h2>
+      <h2>{userFlights? "My Trips" : "Flights List"}</h2>
 
       {/* Filters */}
       <div>
@@ -78,39 +87,7 @@ const FlightsList = () => {
         />
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Airline Company ID</th>
-            <th>Origin Country ID</th>
-            <th>Destination Country ID</th>
-            <th>Departure Time</th>
-            <th>Landing Time</th>
-            <th>Remaining Tickets</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredFlights.map((flight) => (
-            <tr key={flight.id}>
-              <td>{flight.id}</td>
-              <td>{flight.airlineCompanyId}</td>
-              <td>{flight.originCountryId}</td>
-              <td>{flight.destinationCountryId}</td>
-              <td>{flight.departureTime}</td>
-              <td>{flight.landingTime}</td>
-              <td>{flight.remainingTickets}</td>
-              <td>
-                {/* Link to the flight page with the flight ID as a parameter */}
-                <Link to={`/flights/${flight.id}`} params={{ flightId: flight.id }}>
-                  <button>View Details</button>
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <FlightsTable flights={filteredFlights} />
     </div>
   );
 };
