@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import {fetchCustomerDetails, updateCustomerDetails} from '../../api/customer'
+import React, { useState, useEffect } from "react";
+import {
+  fetchCustomerDetails,
+  updateCustomerDetails,
+} from "../../api/customer";
 
 const UpdateCustomerDetails = () => {
   const [customer, setCustomer] = useState({
-    firstName: '',
-    lastName: '',
-    address: '',
-    phoneNumber: '',
-    creditCardNumber: '',
+    firstName: "",
+    lastName: "",
+    address: "",
+    phoneNumber: "",
+    creditCardNumber: "",
   });
 
   useEffect(() => {
-    fetchCustomerDetails().then((response) =>
-    {
-      console.log('customer details', response)
+    fetchCustomerDetails().then((response) => {
+      console.log("customer details", response);
       setCustomer(response);
-    }
-    );
-
+    });
   }, []);
 
   const handleChange = (e) => {
@@ -30,9 +30,9 @@ const UpdateCustomerDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    updateCustomerDetails(customer).then((reponse) =>{
+    updateCustomerDetails(customer).then((reponse) => {
       setCustomer(reponse);
-    })
+    });
   };
 
   return (
