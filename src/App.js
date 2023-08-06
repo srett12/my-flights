@@ -17,6 +17,7 @@ import Unauthorized from "./components/main/Unauthorized";
 import Settings from "./components/main/Settings";
 import { ROLES } from "./utils/Consts";
 import Navbar from "./components/main/NavBar";
+import NotFoundPage from "./components/common/NotFoundPage";
 
 const isLoggedIn = () => {
   return true;
@@ -92,6 +93,8 @@ function App() {
             </Route>
 
             <Route path="/unauthorized" element={<Unauthorized />} />
+            {/* Catch-all route for 404 */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </RoleProvider>
       </div>
