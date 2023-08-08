@@ -1,17 +1,22 @@
 import axios from 'axios';
 
-export const fetchCustomerDetails = async () => {
-    return {
-        firstName: 'John',
-        lastName: 'Doe',
-        address: '123 Main Street',
-        phoneNumber: '555-123-4567',
-        creditCardNumber: '1234-5678-9012-3456'
-      };
+export const fetchCustomerDetails = async (customerId) => {
+
 try {
-      const response = await axios.get('https://api.example.com/get-customer');
-      return response.data;
-    } catch (error) {
+      const response = await axios.get('http://127.0.0.1:5000/get/customers/' + customerId);
+      const item = response.data
+        return {
+          id: item.id.toString(),
+          address: item.address.toString(),
+          creditCardNumber: item.credit_card_no.toString(),
+          firstName: item.first_name.toString(),
+          lastName: item.last_name.toString(),
+          phoneNumber: item.phone_no.toString(),
+          userId: item.user_id.toString()
+        };
+      }
+      
+     catch (error) {
       console.error('Error fetching customer details:', error);
     }
   };
@@ -19,7 +24,8 @@ try {
   export const updateCustomerDetails =  async (customer) => {
     try {
         // Send the updated customer data to the server using Axios
-        const response = await axios.put('https://api.example.com/update-customer', customer);
+        // this url needs to get the customers id also
+        const response = await axios.put('http://127.0.0.1:5000/update/customers/', customer);
         // Assuming the server successfully updated the customer details, show a success message to the user
         console.log('Customer details updated successfully!', response.data)
         return true;
@@ -34,7 +40,7 @@ try {
   export const purchaseTicket =  async (customerId, ticketId) => {
     try {
         // Send the updated customer data to the server using Axios
-        const response = await axios.post('https://api.example.com/add-ticket', {
+        const response = await axios.post('http://127.0.0.1:5000/add/add_tickets', {
             customerId: customerId,
             ticketId: ticketId,
           });
@@ -52,7 +58,8 @@ try {
   export const removeTicket =  async (customerId, ticketId) => {
     try {
         // Send the updated customer data to the server using Axios
-        const response = await axios.put('https://api.example.com/remove-ticket', {
+        // this url needs to get a ticket id
+        const response = await axios.put('http://127.0.0.1:5000/remove/tickets/', {
             customerId: customerId,
             ticketId: ticketId,
           });

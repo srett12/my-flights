@@ -4,7 +4,7 @@ import { useRole } from "../common/RoleContext.js";
 const HomePage = () => {
   const { setUserRole } = useRole();
   useEffect(() => {
-    setUserRole("airline");
+    setUserRole("customer");
   }, []);
   return (
     <div>

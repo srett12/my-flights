@@ -7,7 +7,7 @@ export const fetchAirlineDetails = async (airlineId) => {
   };
   try {
     const response = await axios.get(
-      "https://api.example.com/get-airline/" + airlineId
+      "http://127.0.0.1:5000/get/airlinecompanies/" + airlineId
     );
     return response.data;
   } catch (error) {

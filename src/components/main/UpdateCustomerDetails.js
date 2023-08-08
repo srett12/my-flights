@@ -14,7 +14,7 @@ const UpdateCustomerDetails = () => {
   });
 
   useEffect(() => {
-    fetchCustomerDetails().then((response) => {
+    fetchCustomerDetails(10).then((response) => {
       console.log("customer details", response);
       setCustomer(response);
     });
