@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchAirlineDetails, updateAirlineDetails } from "../../api/airline";
+import { getUserId } from "../../utils/login_utils";
 
 const UpdateAirlineDetails = () => {
   const [airline, setAirline] = useState({
@@ -9,7 +10,8 @@ const UpdateAirlineDetails = () => {
   });
 
   useEffect(() => {
-    fetchAirlineDetails().then((response) => {
+    const airLineId = getUserId();
+    fetchAirlineDetails(airLineId).then((response) => {
       console.log("airline details", response);
       setAirline(response);
     });

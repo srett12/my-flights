@@ -18,10 +18,10 @@ import Settings from "./components/main/Settings";
 import { ROLES } from "./utils/Consts";
 import Navbar from "./components/main/NavBar";
 import NotFoundPage from "./components/common/NotFoundPage";
+import UserDropdown from "./components/main/UserDropdown";
 
 const isLoggedIn = () => {
-  return true;
-  //return !!localStorage.getItem('token'); // Replace 'token' with the name of your login token key
+  return !!localStorage.getItem("userId"); // Replace 'token' with the name of your login token key
 };
 
 function App() {
@@ -29,6 +29,7 @@ function App() {
     <Router>
       <div>
         <RoleProvider>
+          <UserDropdown />
           <Navbar isLoggedIn={isLoggedIn} />
           {/* Define routes using the `Routes` component */}
           <Routes>

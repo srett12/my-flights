@@ -3,6 +3,7 @@ import {
   fetchCustomerDetails,
   updateCustomerDetails,
 } from "../../api/customer";
+import { getUserId } from "../../utils/login_utils";
 
 const UpdateCustomerDetails = () => {
   const [customer, setCustomer] = useState({
@@ -14,7 +15,8 @@ const UpdateCustomerDetails = () => {
   });
 
   useEffect(() => {
-    fetchCustomerDetails(10).then((response) => {
+    const userId = getUserId();
+    fetchCustomerDetails(userId).then((response) => {
       console.log("customer details", response);
       setCustomer(response);
     });

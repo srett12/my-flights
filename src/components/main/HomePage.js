@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
-import { useRole } from "../common/RoleContext.js";
 
 const HomePage = () => {
-  const { setUserRole } = useRole();
-  useEffect(() => {
-    setUserRole("customer");
-  }, []);
   return (
     <div>
       <h2>Welcome to the Home Page!</h2>

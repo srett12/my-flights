@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchFlights, fetchUserFlights } from '../../api/common';
-import FlightsTable from './FlightsTable'; 
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { fetchFlights, fetchUserFlights } from "../../api/common";
+import FlightsTable from "./FlightsTable";
+import { getUserId } from "../../utils/login_utils";
 
-const FlightsList = ({userFlights}) => {
+const FlightsList = ({ userFlights }) => {
   const [flights, setFlights] = useState([]);
   const [filteredFlights, setFilteredFlights] = useState([]);
-  const [originCountryFilter, setOriginCountryFilter] = useState('');
-  const [destinationCountryFilter, setDestinationCountryFilter] = useState('');
-  const [departureTimeFilter, setDepartureTimeFilter] = useState('');
+  const [originCountryFilter, setOriginCountryFilter] = useState("");
+  const [destinationCountryFilter, setDestinationCountryFilter] = useState("");
+  const [departureTimeFilter, setDepartureTimeFilter] = useState("");
 
   useEffect(() => {
     // Function to fetch flights data from the server using the fetchFlights function from your API
-    if (userFlights){
-        const userId = localStorage.setItem('userId', null);
-        fetchUserFlights(userId).then((flightsData) => {
-            setFlights(flightsData);
-          });
-    }
-    else{
-        fetchFlights().then((flightsData) => {
-            setFlights(flightsData);
-          });
+    if (userFlights) {
+      const userId = getUserId();
+      fetchUserFlights(userId).then((flightsData) => {
+        setFlights(flightsData);
+      });
+    } else {
+      fetchFlights().then((flightsData) => {
+        setFlights(flightsData);
+      });
     }
   }, [userFlights]);
 
@@ -29,34 +29,41 @@ const FlightsList = ({userFlights}) => {
     // Function to apply filters and update the filtered flights
     const applyFilters = () => {
       let filteredFlights = flights;
-  
+
       if (originCountryFilter) {
         filteredFlights = filteredFlights.filter((flight) =>
           flight.originCountryId.toString().includes(originCountryFilter)
         );
       }
-  
+
       if (destinationCountryFilter) {
         filteredFlights = filteredFlights.filter((flight) =>
-          flight.destinationCountryId.toString().includes(destinationCountryFilter)
+          flight.destinationCountryId
+            .toString()
+            .includes(destinationCountryFilter)
         );
       }
-  
+
       if (departureTimeFilter) {
         filteredFlights = filteredFlights.filter((flight) =>
           flight.departureTime.includes(departureTimeFilter)
         );
       }
-  
+
       setFilteredFlights(filteredFlights);
     };
-  
+
     applyFilters();
-  }, [flights, originCountryFilter, destinationCountryFilter, departureTimeFilter]);
+  }, [
+    flights,
+    originCountryFilter,
+    destinationCountryFilter,
+    departureTimeFilter,
+  ]);
 
   return (
     <div>
-      <h2>{userFlights? "My Trips" : "Flights List"}</h2>
+      <h2>{userFlights ? "My Trips" : "Flights List"}</h2>
 
       {/* Filters */}
       <div>
@@ -69,7 +76,9 @@ const FlightsList = ({userFlights}) => {
         />
       </div>
       <div>
-        <label htmlFor="destinationCountryFilter">Destination Country ID:</label>
+        <label htmlFor="destinationCountryFilter">
+          Destination Country ID:
+        </label>
         <input
           type="text"
           id="destinationCountryFilter"

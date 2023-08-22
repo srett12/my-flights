@@ -29,7 +29,7 @@ const Navbar = ({ isLoggedIn }) => {
         <li>
           <Link to="/flights">All Flights</Link>
         </li>
-        {isLoggedIn() ? (
+        {/*{isLoggedIn() ? (
           <li>
             <button onClick={handleLogout}>Logout</button>
           </li>
@@ -37,7 +37,7 @@ const Navbar = ({ isLoggedIn }) => {
           <li>
             <Link to="/login">Login</Link>
           </li>
-        )}
+        )}*/}
       </ul>
     </nav>
   );

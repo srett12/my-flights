@@ -10,3 +10,10 @@ export const ROLES = {
   customer: "customer",
   admin: "admin",
 };
+
+export const UserData = {
+  1: { role: "customer" },
+  2: { role: "customer" },
+  3: { role: "airline" },
+  // Add more user data as needed
+};

@@ -10,6 +10,11 @@ export const fetchAirlineDetails = async (airlineId) => {
       "http://127.0.0.1:5000/get/airlinecompanies/" + airlineId
     );
     return response.data;
+    const item = response.data;
+    return {
+      name: item.name.toString(),
+      country: item.country.toString(),
+    };
   } catch (error) {
     console.error("Error fetching airline details:", error);
   }
